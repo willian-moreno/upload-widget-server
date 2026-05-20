@@ -2,9 +2,9 @@
   "name": "upload-widget-server",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "src/infra/http/server.ts",
   "scripts": {
-    "dev": "tsx watch src/infra/http/server.ts"
+    "dev": "tsx watch --env-file .env src/infra/http/server.ts"
   },
   "repository": {
     "type": "git",
