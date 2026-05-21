@@ -32,7 +32,7 @@ export const uploadImageRoute: FastifyPluginAsyncZod = async (
           remoteKey: 'test.jpg',
           remoteUrl: 'http://test.com',
         })
-        .returning()
+        .returning({ id: schema.uploads.id })
 
       return await reply.status(201).send({ uploadId: upload[0].id })
     }
