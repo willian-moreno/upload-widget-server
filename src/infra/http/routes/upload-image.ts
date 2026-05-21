@@ -2,8 +2,7 @@ import type { FastifyInstance } from 'fastify'
 import type { FastifyPluginAsyncZod } from 'fastify-type-provider-zod'
 import z from 'zod'
 import { uploadImageUseCase } from '@/app/use-cases/upload-image-use-case'
-import { db } from '@/infra/db'
-import { schema } from '@/infra/db/schemas'
+import { isLeft, unwrapEither } from '@/shared/either'
 
 export const uploadImageRoute: FastifyPluginAsyncZod = async (
   server: FastifyInstance
@@ -15,10 +14,8 @@ export const uploadImageRoute: FastifyPluginAsyncZod = async (
         summary: 'Upload an image',
         consumes: ['multipart/form-data'],
         response: {
-          201: z.object({ uploadId: z.string() }),
-          400: z.object({
-            message: z.string().describe('File is required'),
-          }),
+          201: z.null().describe('Image uploaded'),
+          400: z.object({ message: z.string() }),
         },
       },
     },
@@ -30,16 +27,28 @@ export const uploadImageRoute: FastifyPluginAsyncZod = async (
       })
 
       if (!uploadedFile) {
-        return await reply.status(400).send({ message: 'File is required' })
+        return reply.status(400).send({ message: 'File is required' })
       }
 
-      const { uploadId } = await uploadImageUseCase({
+      const result = await uploadImageUseCase({
         fileName: uploadedFile.filename,
         contentType: uploadedFile.mimetype,
         contentStream: uploadedFile.file,
       })
 
-      return await reply.status(201).send({ uploadId })
+      if (isLeft(result)) {
+        const error = unwrapEither(result)
+
+        switch (error.name) {
+          case 'InvalidFileFormat': {
+            return reply.status(400).send({ message: error.message })
+          }
+        }
+
+        return
+      }
+
+      return reply.status(201).send()
     }
   )
 }
