@@ -5,13 +5,14 @@
     },
     "editor.codeActionsOnSave": {
         "source.fixAll.biome": "explicit",
+        "source.organizeImports": "never",
         "source.organizeImports.biome": "explicit"
     },
     "editor.formatOnSave": true,
     "explorer.fileNesting.enabled": true,
     "explorer.fileNesting.expand": false,
     "explorer.fileNesting.patterns": {
-        "package.json": "biome.json, package-lock.json, tsconfig*.json, vite.config.*"
+        "package.json": "biome.json, drizzle.config.ts, package-lock.json, tsconfig*.json, vite.config.*"
     },
     "js/ts.tsdk.path": "node_modules\\typescript\\lib"
 }
