@@ -6,7 +6,8 @@
     "editor.codeActionsOnSave": {
         "source.fixAll.biome": "explicit",
         "source.organizeImports": "never",
-        "source.organizeImports.biome": "explicit"
+        "source.organizeImports.biome": "explicit",
+        "source.removeUnusedImports": "explicit"
     },
     "editor.formatOnSave": true,
     "explorer.fileNesting.enabled": true,
