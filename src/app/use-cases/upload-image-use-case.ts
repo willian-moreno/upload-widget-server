@@ -14,11 +14,15 @@ const uploadImageInput = z.object({
 
 export type UploadImageInput = z.input<typeof uploadImageInput>
 
+export type UploadImageOutput = {
+  url: string
+}
+
 const allowedMimeTypes = ['image/jpg', 'image/jpeg', 'image/png', 'image/webp']
 
 export async function uploadImageUseCase(
   input: UploadImageInput
-): Promise<Either<InvalidFileFormat, { url: string }>> {
+): Promise<Either<InvalidFileFormat, UploadImageOutput>> {
   const { fileName, contentType, contentStream } = uploadImageInput.parse(input)
 
   if (!allowedMimeTypes.includes(contentType)) {
