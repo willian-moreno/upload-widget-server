@@ -32,10 +32,6 @@ Mesmo sendo um projeto de estudos, caso encontre alguma vulnerabilidade ou probl
 
 - willian_moreno@outlook.com
 
-Ou abrir uma issue no repositório:
-
-- :contentReference[oaicite:0]{index=0}
-
 ---
 
 ## Scope
