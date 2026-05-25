@@ -202,7 +202,7 @@ npm run db:studio
 
 Com o servidor em execução, o Swagger UI estará disponível em:
 
-```
+```text
 http://localhost:{PORT}/docs
 ```
 
