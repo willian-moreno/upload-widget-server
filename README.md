@@ -45,7 +45,7 @@
 | Camada         | Tecnologia                            |
 | -------------- | ------------------------------------- |
 | Runtime        | Node.js 22 (ESM, `"type": "module"`)  |
-| Linguagem      | TypeScript 6                          |
+| Linguagem      | TypeScript 5                          |
 | Framework      | Fastify 5                             |
 | ORM            | Drizzle ORM + drizzle-kit             |
 | Banco de dados | PostgreSQL                            |
