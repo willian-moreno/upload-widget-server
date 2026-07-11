@@ -1,12 +1,10 @@
+import { uploadImageUseCase } from '@/app/use-cases/upload-image-use-case'
+import { isLeft, unwrapEither } from '@/shared/either'
 import type { FastifyInstance } from 'fastify'
 import type { FastifyPluginAsyncZod } from 'fastify-type-provider-zod'
 import z from 'zod'
-import { uploadImageUseCase } from '@/app/use-cases/upload-image-use-case'
-import { isLeft, unwrapEither } from '@/shared/either'
 
-export const uploadImageRoute: FastifyPluginAsyncZod = async (
-  server: FastifyInstance
-) => {
+export const uploadImageRoute: FastifyPluginAsyncZod = async (server: FastifyInstance) => {
   server.post(
     '/uploads',
     {
@@ -15,7 +13,7 @@ export const uploadImageRoute: FastifyPluginAsyncZod = async (
         tags: ['uploads'],
         consumes: ['multipart/form-data'],
         response: {
-          201: z.null().describe('Image uploaded'),
+          201: z.object({ url: z.url() }).describe('Image uploaded'),
           400: z.object({ message: z.string() }),
         },
       },
@@ -53,7 +51,9 @@ export const uploadImageRoute: FastifyPluginAsyncZod = async (
         return
       }
 
-      return reply.status(201).send()
-    }
+      const { url } = unwrapEither(result)
+
+      return reply.status(201).send({ url })
+    },
   )
 }
